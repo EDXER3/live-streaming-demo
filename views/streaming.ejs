@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>server to strat streaming</title>
+	<script>
+    const room = "<%= roomName %>"
+  </script>
+	</head>
+<body>
+	<h1> server to strat streaming</h1>
+	<p id="name-channel">Channel : <%= roomName %></p>
+	<video id="video" poster="live streaming.jpg" controls="true" autoplay ></video>
+	<canvas id="canvas" width="780" height="440"></canvas>
+	<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+	<script defer src="streaming.js"></script>
+
+</body>
+
+</html>
