@@ -13,43 +13,10 @@
     vendorUrl = (w.URL || w.webkitURL),
     context = canvas.getContext('2d')
 
-    if(n.mediaDevices && n.mediaDevices.getUserMedia) {
-      // Not adding `{ audio: true }` since we only want video now
-      n.mediaDevices.getUserMedia({ video: true,audio :false }).then(function(stream) {
+    if(n.mediaDevices && n.mediaDevices.getUserMedia ||n.getUserMedi ||n.webkitGetUserMedia||n.mozGetUserMedia) {
         startCamera = true
-        try{
-          video.srcObject = stream
-        }catch (error) {
-          video.src = vendorUrl.createObjectURL(stream)
-        }
-          video.play()
-      })
   }
-
-  // Legacy code below: getUserMedia
-  else if(n.getUserMedia) { // Standard
-      n.getUserMedia({ video: true }, function(stream) {
-          startCamera = true
-          video.src = stream
-          video.play()
-      }, errBack)
-  } else if(n.webkitGetUserMedia) { // WebKit-prefixed
-      n.webkitGetUserMedia({ video: true }, function(stream){
-          startCamera = true
-          video.src = vendorUrl.createObjectURL(stream)
-          video.play()
-      }, errBack);
-  } else if(n.mozGetUserMedia) { // Mozilla-prefixed
-      n.mozGetUserMedia({ video: true }, function(stream){
-          startCamera = true
-          video.srcObject = stream
-          video.play()
-      }, errBack)
-  }
-
-
  //io.emit('new-user', room )
-
 
 
   w.playVideo = (function(cd){
@@ -81,7 +48,7 @@
 
   w.addEventListener('load', function(){
     //video.autoplay = true
-    video.style.display = 'none'
+    //video.style.display = 'none'
     //canvas.style.display = 'none'
     canvas.style.display = 'block'
     streamVideo(context, canvas, video)
