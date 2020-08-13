@@ -1,6 +1,5 @@
 (function (d,w, io){
   'use strict'
-  var checkjoin = false
 /*
   diplay_streaming(d, io)
 
@@ -35,7 +34,6 @@ io.on('play stream', function (image){
   live_streaming.src = image
 
 })
-
 
   diplay_streaming(d, io)
 }

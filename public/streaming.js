@@ -12,28 +12,40 @@
     canvas = d.querySelector('#canvas'),
     vendorUrl = (w.URL || w.webkitURL),
     context = canvas.getContext('2d')
-  n.streaming = (
-    navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia
-  )
-  n.streaming({
-    video : true,
-    audio : false
-  }, function(stream){
-    startCamera = true
-      //video.src = w.URL.createObjectURL(stream)
-    try {
-        video.srcObject = stream
-    } catch (error) {
-        video.src = vendorUrl.createObjectURL(stream)
-    }
-    //video.play;
-    video.play
-  }, function (err){
-    alert('error :' + err)
-  })
+
+    if(n.mediaDevices && n.mediaDevices.getUserMedia) {
+      // Not adding `{ audio: true }` since we only want video now
+      n.mediaDevices.getUserMedia({ video: true,audio :false }).then(function(stream) {
+        startCamera = true
+        try{
+          video.srcObject = stream
+        }catch (error) {
+          video.src = vendorUrl.createObjectURL(stream)
+        }
+          video.play()
+      })
+  }
+
+  // Legacy code below: getUserMedia
+  else if(n.getUserMedia) { // Standard
+      n.getUserMedia({ video: true }, function(stream) {
+          startCamera = true
+          video.src = stream
+          video.play()
+      }, errBack)
+  } else if(n.webkitGetUserMedia) { // WebKit-prefixed
+      n.webkitGetUserMedia({ video: true }, function(stream){
+          startCamera = true
+          video.src = vendorUrl.createObjectURL(stream)
+          video.play()
+      }, errBack);
+  } else if(n.mozGetUserMedia) { // Mozilla-prefixed
+      n.mozGetUserMedia({ video: true }, function(stream){
+          startCamera = true
+          video.srcObject = stream
+          video.play()
+      }, errBack)
+  }
 
 
  //io.emit('new-user', room )
@@ -59,7 +71,7 @@
 
     if(startCamera){
       //io.emit('streaming',(outputStream))
-      io.emit('new-user', room )
+      io.emit('new-user', room)
       io.emit('start-streaming',room , outputStream)
     }
     playVideo(function(){
