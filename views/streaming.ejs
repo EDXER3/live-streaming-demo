@@ -10,9 +10,9 @@
 <body>
 	<h1> server to strat streaming</h1>
 	<p id="name-channel">Channel : <%= roomName %></p>
-	<video id="video" poster="live streaming.jpg" controls="true" autoplay ></video>
+	<video id="video" controls="true" autoplay ></video>
 	<canvas id="canvas" width="500" height="400"></canvas>
-	<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
 	<script defer src="streaming.js"></script>
 	<script src="display video.js"></script>
 

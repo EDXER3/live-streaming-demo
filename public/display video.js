@@ -1,19 +1,23 @@
+(function (d,w,n){
   'use strict'
-  var video = document.getElementById('video')
+  var video = d.querySelector('#video'),
+      canvas = d.querySelector('#canvas')
 
   // Get access to the camera!
 
-  if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  if(n.mediaDevices && n.mediaDevices.getUserMedia) {
       // Not adding `{ audio: true }` since we only want video now
-      navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+      n.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
           try{
             video.srcObject = stream
           }catch (error) {
-            video.src = window.URL.createObjectURL(stream)
+            video.src = w.URL.createObjectURL(stream)
           }
           video.play()
+          let {width, height} = stream.getTracks()[0].getSettings();
+          setConvas(canvas,width,height)
       })
-  } else if(navigator.getUserMedia) { // Standard
+  } /*else if(navigator.getUserMedia) { // Standard
       navigator.getUserMedia({ video: true }, function(stream) {
           video.src = stream
           video.play()
@@ -28,4 +32,11 @@
           video.srcObject = stream
           video.play()
       }, errBack)
+  }*/
+
+  function setConvas(canvas,w,h) {
+    canvas.width  = w
+    canvas.height = h
   }
+
+}) (document,window,navigator)

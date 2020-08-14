@@ -1,6 +1,6 @@
 (function (d, io){
 
-var socket = io('http://localhost:3000')
+var socket = io()
 var roomContainer = d.getElementById('room-container')
 
 socket.on('room-created', room => {

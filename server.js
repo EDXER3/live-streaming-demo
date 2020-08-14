@@ -4,9 +4,9 @@ var express = require('express'),
   app = express(),
 	http = require('http').createServer(app),
 	io = require('socket.io')(http),
-	port = process.env.PORT || 3000,
-	publicDir = `${__dirname}/views`
+	port = process.env.PORT || 3000
 
+  
 app.set('views', './views')
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
@@ -71,5 +71,21 @@ io.on('connection', (socket) => {
     //console.log(image)
     //console.log(room)
   })
+/*
+  socket.on('disconnect', () => {
+    getRooms(socket).forEach(room => {
+    socket.to(room).emit('room-delete', room =>{
+      delete rooms[room]
+    })
+
+  })
+
+  })
+*/
+
 
 })
+
+function getRooms(socket) {
+  return Object.entries(rooms)
+}

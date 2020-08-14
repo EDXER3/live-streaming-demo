@@ -1,41 +1,21 @@
 (function (d,w, io){
   'use strict'
-/*
-  diplay_streaming(d, io)
 
-  function diplay_streaming(d, io){
 
-  var io = io('http://localhost:3000'),
-    live_streaming = d.querySelector('#streaming')
-  //io.emit('new-streaming', room)
-  //function diplay_streaming(d, io){
+  diplay_streaming(io)
 
+function diplay_streaming(io){
+
+  var io = io()
+  io.emit('new-user', room)
   io.on('play stream', function (image){
-    live_streaming.src = image
 
+  d.querySelector('#streaming').src = image
+  //console.log(image)
   })
-    diplay_streaming(d, io)
+
+  diplay_streaming(io)
+
   }
-*/
 
-diplay_streaming(d, io)
-
-function diplay_streaming(d, io){
-
-var io = io('http://localhost:3000'),
-  live_streaming = d.querySelector('#streaming')
-//io.emit('new-streaming', room)
-//function diplay_streaming(d, io){
-
-io.emit('new-user', room )
-
-io.on('play stream', function (image){
-
-  live_streaming.src = image
-
-})
-
-  diplay_streaming(d, io)
-}
-
-}) (document,window, io )
+}) (document,window, io)
